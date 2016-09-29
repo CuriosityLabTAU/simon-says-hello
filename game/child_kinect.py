@@ -28,23 +28,19 @@ class ChildKinect(Component):
 
     def got_pose(self, data):
         poses = eval(data.data)
-
         if self.current_state == 'wait_for_start_pose':
-            print('check if poses is only start pose')
             if poses[2] == 1:
                 self.current_state = 'start_pose_detected'
                 return
 
         if self.current_state == 'wait_for_yes_pose':
-            print('check if poses is only yes pose')
             if poses[0] == 1:
                 self.current_state = 'yes_pose_detected'
                 return
 
         if self.current_state == 'wait_for_current_pose':
-            print('wait_for_current_pose')
-            poses = eval(data.data)
-            self.current_state = 'received_pose'
             self.current_param = poses
+            self.current_state = 'received_pose'
+
 
 

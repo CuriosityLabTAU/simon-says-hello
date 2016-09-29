@@ -7,7 +7,7 @@ import json
 
 class GameManager(Component):
     #kinect_listener = None
-    with open("poses_logics.json") as data_file:
+    with open("./kinect/poses_logics.json") as data_file:
         logics_json = json.load(data_file)
         # self.poses_conditions = logics_json['conditions']
         poses_names = logics_json['names']

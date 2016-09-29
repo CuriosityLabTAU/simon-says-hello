@@ -75,14 +75,17 @@ class NaoNode:
             "right_hand_up",
             "left_hand_up",
             "both_hands_up",
+            "right_hand_down",
+            "left_hand_down",
+            "both_hands_down",
             "right_hand_forward",
             "left_hand_forward",
             "both_hands_forward",
             "right_hand_side",
             "left_hand_side",
-            "both_hand_side"
+            "both_hands_side"
           ]
-        
+
         self.poses = {}
         for n in self.pose_names:
             self.poses[n] = {
@@ -111,10 +114,10 @@ class NaoNode:
         self.poses['left_hand_side']['left_arm'][0] = 0
         self.poses['left_hand_side']['left_arm'][1] = +60
         
-        self.poses['both_hand_side']['right_arm'][0] = 0
-        self.poses['both_hand_side']['right_arm'][1] = -60
-        self.poses['both_hand_side']['left_arm'][0] = 0
-        self.poses['both_hand_side']['left_arm'][1] = +60
+        self.poses['both_hands_side']['right_arm'][0] = 0
+        self.poses['both_hands_side']['right_arm'][1] = -60
+        self.poses['both_hands_side']['left_arm'][0] = 0
+        self.poses['both_hands_side']['left_arm'][1] = +60
 
     def play_file(self, filename=None):
         #plays a file and get the current position 5 seconds later

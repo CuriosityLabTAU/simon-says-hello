@@ -30,6 +30,7 @@ class KinectPose():
         for pose_name in self.poses_names:
             self.poses_satisfied.append (self.check_condition(pose_name))   #(eval(condition))
         print("poses_satistied", self.poses_satisfied)
+        print(self.poses_names)
 
     def check_condition (self,pose_name):
         if (pose_name =="right_hand_up"):
