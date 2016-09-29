@@ -12,7 +12,7 @@ class ChildKinect(Component):
 
         rospy.init_node('kinect_listener', anonymous=True)
         rospy.Subscriber("kinect_poses", String, self.got_pose)
-        rospy.spin()
+        # rospy.spin()
 
     def wait_for_start_pose(self):
         self.current_state = 'wait_for_start_pose'

@@ -1,6 +1,6 @@
 {
   "start_pose_detection": [
-    ["its so much to play. please raise both your hands to start", "YAWN", "introduction_0", "POSE_FORWARD"]
+    ["its so much to play. please raise both your hands to start", "hello", "introduction_0", "POSE_FORWARD"]
   ],
   "introduction": [
     ["lets play simon says","ask_again_0"]

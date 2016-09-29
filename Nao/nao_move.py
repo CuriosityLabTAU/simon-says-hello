@@ -119,13 +119,13 @@ class NaoNode:
     def play_file(self, filename=None):
         #plays a file and get the current position 5 seconds later
         # fileId = self.audioProxy.post.playFile("../audio_files/bye.wav")
-        self.audioProxy.playFile('/home/nao/naoqi/wav/' + 'bye.wav',1.0,0.0)
+        self.audioProxy.playFile('/home/nao/naoqi/wav/' + filename,1.0,0.0)
 
-try:
-    nao = NaoNode()
-    nao.move_to_pose(nao.poses['right_hand_up'])
-    nao.play_file()
-except rospy.ROSInterruptException:
-    pass
+# try:
+#     nao = NaoNode()
+#     nao.move_to_pose(nao.poses['right_hand_up'])
+#     nao.play_file()
+# except rospy.ROSInterruptException:
+#     pass
 
 

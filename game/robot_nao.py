@@ -7,7 +7,7 @@ class RobotNao(Component):
 
     def introduction(self):
         self.current_state = 'introduction'
-        # say introduction
+        self.robot.play_file('intro.wav')
 
     def act(self):
         self.current_state = "act"
@@ -21,6 +21,11 @@ class RobotNao(Component):
 
     def respond(self):
         pass
+
+    def start_pose_detection(self):
+        self.robot.play_file('hello.wav')
+
+
 
 
 
