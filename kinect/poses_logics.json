@@ -5,7 +5,10 @@
     "two_hands_up",
     "right_hand_forward",
     "left_hand_forward",
-    "both_hands_forward"
+    "both_hands_forward",
+    "right_hand_side",
+    "left_hand_side",
+    "both_hand_side"
   ],
   "conditions": [
     "positions['right_hand']['y'] > positions['right_shoulder']['y']",
