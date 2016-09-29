@@ -2,9 +2,9 @@ import json
 
 class KinectPose():
     def __init__(self):
-        self.poses_satisfied = [0,0,0]
-        self.poses_names = ["right_hand_up","left_hand_up","two_hands_up"]
-        self.poses_conditions = [""]
+        self.poses_satisfied = []
+        self.poses_names = []
+        self.poses_conditions = []
         self.positions = {'head':{}, 'neck':{}, 'torso':{}, 'left_shoulder':{}, 'left_elbow':{}, 'left_hand':{}, 'right_shoulder':{}, 'right_elbow':{}, 'right_hand':{}, 'left_hip':{}, 'left_knee':{}, 'left_foot':{}, 'right_hip':{},
                           'right_knee':{},'right_foot':{}}
         with open("poses_logics.json") as data_file:
@@ -23,7 +23,7 @@ class KinectPose():
 
         print (self.positions['head']['x'])
 
-    #def parse_condition(self):
+    def parse_condition(self):
 
 
    #def check_condition
