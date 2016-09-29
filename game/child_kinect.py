@@ -23,6 +23,9 @@ class ChildKinect(Component):
     def wait_for_current_pose(self):
         self.current_state = 'wait_for_current_pose'
 
+    def wait(self):
+        pass
+
     def got_pose(self, data):
         poses = eval(data.data)
 

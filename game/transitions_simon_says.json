@@ -53,7 +53,8 @@
   "play": {
     "start": "game:start_game",
     "transitions": [
-      "game:start_game:robot:act:1",
+      "game:start_game:game:choose_action",
+      "game:got_action:robot:act:1:x",
       "robot:act:game:wait:1",
       "game:wait:child_kinect:wait:1",
       "robot:finished_action:game:request_pose:1",

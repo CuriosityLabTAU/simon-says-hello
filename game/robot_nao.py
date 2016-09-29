@@ -14,14 +14,15 @@ class RobotNao(Component):
     def act(self):
         self.current_state = "act"
         # say saimon says
-        print "Simon says"
+        print "Simon says", self.current_param
         # say raise you hands
         print "raise you hands"
         # raise robot hands
         print "raising hands"
-
-    def finished_action(self):
         self.current_state = "finished_action"
+
+    def respond(self):
+        pass
 
 
 

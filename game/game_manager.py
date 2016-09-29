@@ -1,5 +1,6 @@
 from interaction_control.component import *
 import rospy
+import random
 #import String
 
 
@@ -13,3 +14,22 @@ class GameManager(Component):
         rospy.init_node('kinect_listener', anonymous=True)
         rospy.Subscriber("skeleton", skeleton, self.got_pose)
         rospy.spin()
+
+    def start_game(self):
+        print('starting game')
+        self.current_param = "both_hands_up"
+
+    def choose_action(self):
+        param = random.randint(0, 12)
+        self.current_param = param
+        print self.current_param
+        self.current_state = "got_action"
+
+    def wait(self):
+        pass
+
+    def request_pose(self):
+        pass
+
+    def judge_pose(self):
+        pass
