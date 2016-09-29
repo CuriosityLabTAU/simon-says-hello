@@ -1,18 +1,20 @@
 import json
+import re
 
 class KinectPose():
     def __init__(self):
         self.poses_satisfied = []
         self.poses_names = []
         self.poses_conditions = []
-        self.positions = {'head':{}, 'neck':{}, 'torso':{}, 'left_shoulder':{}, 'left_elbow':{}, 'left_hand':{}, 'right_shoulder':{}, 'right_elbow':{}, 'right_hand':{}, 'left_hip':{}, 'left_knee':{}, 'left_foot':{}, 'right_hip':{},
-                          'right_knee':{},'right_foot':{}}
+        self.positions = {
+            'head':{}, 'neck':{}, 'torso':{}, 'left_shoulder':{}, 'left_elbow':{}, 'left_hand':{}, 'right_shoulder':{},
+            'right_elbow':{}, 'right_hand':{}, 'left_hip':{}, 'left_knee':{}, 'left_foot':{}, 'right_hip':{},
+            'right_knee':{},'right_foot':{}
+        }
         with open("poses_logics.json") as data_file:
             logics_json = json.load(data_file)
-            self.poses_conditions = logics_json['conditions']
+            #self.poses_conditions = logics_json['conditions']
             self.poses_names = logics_json['names']
-            print(self.poses_conditions,self.poses_names)
-
 
     def update_position(self,positions):
         names = ['head', 'neck', 'torso', 'left_shoulder', 'left_elbow', 'left_hand', 'right_shoulder', 'right_elbow', 'right_hand', 'left_hip', 'left_knee', 'left_foot', 'right_hip', 'right_knee', 'right_foot']
@@ -20,10 +22,43 @@ class KinectPose():
             self.positions[name]['x'] = positions[names.index(name)].x
             self.positions[name]['y'] = positions[names.index(name)].y
             self.positions[name]['z'] = positions[names.index(name)].z
+        self.check_conditions()
 
-        print (self.positions['head']['x'])
+    def check_conditions(self):
+        positions = self.positions
+        self.poses_satisfied = []
+        for pose_name in self.poses_names:
+            self.poses_satisfied.append (self.check_condition(pose_name))   #(eval(condition))
+        x1 = abs(positions['right_hand']['x'] - positions['right_shoulder']['x'])
+        x2 = abs(positions['right_hand']['y'] - positions['right_shoulder']['y'])
+        print("right_hand_forward", self.poses_satisfied[3], x1, x2)
+        #print("poses_satistied", self.poses_satisfied)
 
-    def parse_condition(self):
-        print("r")
+    def check_condition (self,pose_name):
+        if (pose_name =="right_hand_up"):
+            satisfied = self.positions['right_hand']['y'] > self.positions['right_shoulder']['y']
+        elif (pose_name=="left_hand_up"):
+            satisfied =  self.positions['left_hand']['y'] > self.positions['left_shoulder']['y']
+        elif (pose_name=="two_hands_up"):
+            satisfied = self.positions['right_hand']['y'] > self.positions['right_shoulder']['y'] and self.positions['left_hand']['y'] > self.positions['left_shoulder']['y']
+        elif (pose_name=="right_hand_forward"):
+            satisfied = self.check_right_hand_forward()
+        return satisfied
 
-   #def check_condition
+    def check_right_hand_forward (self):
+        delta_x = abs(self.positions['right_hand']['x']-self.positions['right_shoulder']['x'])
+        delta_y = abs(self.positions['right_hand']['y']-self.positions['right_shoulder']['y'])
+        delta_z = abs(self.positions['right_hand']['z']-self.positions['right_shoulder']['z'])
+        delta_shoulders = abs(self.positions['right_shoulder']['x']-self.positions['left_shoulder']['x'])
+        return (delta_x<0.3 and delta_y<0.3 and delta_z>delta_shoulders)
+
+
+    def check_left_hand_forward(self):
+        delta_x = abs(self.positions['left_hand']['x'] - self.positions['left_shoulder']['x'])
+        delta_y = abs(self.positions['left_hand']['y'] - self.positions['left_shoulder']['y'])
+        delta_z = abs(self.positions['left_hand']['z'] - self.positions['left_shoulder']['z'])
+        delta_shoulders = abs(self.positions['right_shoulder']['x'] - self.positions['left_shoulder']['x'])
+        return (delta_x < 0.3 and delta_y < 0.3 and delta_z > delta_shoulders)
+
+    def  both_hand_forward(self):
+        return self.check_right_hand_forward() and self.check_left_hand_forward()

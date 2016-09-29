@@ -2,11 +2,15 @@
   "names": [
     "right_hand_up",
     "left_hand_up",
-    "two_hands_up"
+    "two_hands_up",
+    "right_hand_forward",
+    "left_hand_forward",
+    "both_hands_forward"
   ],
   "conditions": [
-    "right_hand.y > right_shoulder.y",
-    "left_hand.y > left_shoulder.y",
-    "right_hand.y > right_shoulder.y and left_hand.y > left_shoulder.y"
+    "positions['right_hand']['y'] > positions['right_shoulder']['y']",
+    "positions['left_hand']['y'] > positions['left_shoulder']['y']",
+    "positions['right_hand']['y'] > positions['right_shoulder']['y'] and positions['left_hand']['y'] > positions['left_shoulder']['y']",
+    "abs(positions['right_hand']['x']-positions['right_shoulder']['x'])<0.3 and abs(positions['right_hand']['y']-positions['right_shoulder']['y'])<0.3"
   ]
 }
