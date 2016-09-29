@@ -1,6 +1,6 @@
 import rospy
 from skeleton_markers.msg import Skeleton
-
+from kinect_pos import KinectPose
 
 
 
@@ -27,6 +27,10 @@ def callback(data):
     #
     #
     #
+
+    pose = KinectPose()
+    pose.update_position(data.position)
+
     # print(data.position)
 #['head', 'neck', 'torso', 'left_shoulder', 'left_elbow', 'left_hand', 'right_shoulder', 'right_elbow', 'right_hand', 'left_hip', 'left_knee', 'left_foot', 'right_hip', 'right_knee', 'right_foot']
 
