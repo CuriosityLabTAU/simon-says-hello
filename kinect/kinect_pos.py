@@ -36,14 +36,43 @@ class KinectPose():
 
     def check_condition (self,pose_name):
         if (pose_name =="right_hand_up"):
-            satisfied = self.positions['right_hand']['y'] > self.positions['right_shoulder']['y']
+            satisfied = self.check_right_hand_up()
         elif (pose_name=="left_hand_up"):
-            satisfied =  self.positions['left_hand']['y'] > self.positions['left_shoulder']['y']
-        elif (pose_name=="two_hands_up"):
-            satisfied = self.positions['right_hand']['y'] > self.positions['right_shoulder']['y'] and self.positions['left_hand']['y'] > self.positions['left_shoulder']['y']
+            satisfied =  self.check_left_hand_up()
+        elif (pose_name=="both_hands_up"):
+            satisfied = self.check_both_hands_up()
         elif (pose_name=="right_hand_forward"):
             satisfied = self.check_right_hand_forward()
+        elif (pose_name=="left_hand_forward"):
+            satisfied = self.check_left_hand_forward()
+        elif (pose_name=="both_hands_forward"):
+            satisfied = self.check_both_hands_forward()
+        elif (pose_name=="right_hand_side"):
+            satisfied = self.check_right_hand_side()
+        elif (pose_name=="left_hand_side"):
+            satisfied = self.check_left_hand_side()
+        elif (pose_name=="both_hands_side"):
+            satisfied = self.check_both_hands_side()
+        else:
+            print("error in check condition")
         return satisfied
+
+    def check_right_hand_up(self):
+        delta_x = abs(self.positions['right_hand']['x'] - self.positions['right_shoulder']['x'])
+        delta_y = abs(self.positions['right_hand']['y'] - self.positions['right_shoulder']['y'])
+        delta_z = abs(self.positions['right_hand']['z'] - self.positions['right_shoulder']['z'])
+        delta_shoulders = abs(self.positions['right_shoulder']['x'] - self.positions['left_shoulder']['x'])
+        return (delta_x < 0.3 and delta_y > delta_shoulders and delta_z < 0.3)
+
+    def check_left_hand_up(self):
+        delta_x = abs(self.positions['left_hand']['x'] - self.positions['left_shoulder']['x'])
+        delta_y = abs(self.positions['left_hand']['y'] - self.positions['left_shoulder']['y'])
+        delta_z = abs(self.positions['left_hand']['z'] - self.positions['left_shoulder']['z'])
+        delta_shoulders = abs(self.positions['right_shoulder']['x'] - self.positions['left_shoulder']['x'])
+        return (delta_x < 0.3 and delta_y > delta_shoulders and delta_z < 0.3)
+
+    def check_both_hands_up(self):
+        return self.check_right_hand_up() and self.check_left_hand_up()
 
     def check_right_hand_forward (self):
         delta_x = abs(self.positions['right_hand']['x']-self.positions['right_shoulder']['x'])
@@ -52,7 +81,6 @@ class KinectPose():
         delta_shoulders = abs(self.positions['right_shoulder']['x']-self.positions['left_shoulder']['x'])
         return (delta_x<0.3 and delta_y<0.3 and delta_z>delta_shoulders)
 
-
     def check_left_hand_forward(self):
         delta_x = abs(self.positions['left_hand']['x'] - self.positions['left_shoulder']['x'])
         delta_y = abs(self.positions['left_hand']['y'] - self.positions['left_shoulder']['y'])
@@ -60,5 +88,23 @@ class KinectPose():
         delta_shoulders = abs(self.positions['right_shoulder']['x'] - self.positions['left_shoulder']['x'])
         return (delta_x < 0.3 and delta_y < 0.3 and delta_z > delta_shoulders)
 
-    def  both_hand_forward(self):
+    def check_both_hands_forward(self):
         return self.check_right_hand_forward() and self.check_left_hand_forward()
+
+    def check_right_hand_side(self):
+        delta_x = abs(self.positions['right_hand']['x']-self.positions['right_shoulder']['x'])
+        delta_y = abs(self.positions['right_hand']['y']-self.positions['right_shoulder']['y'])
+        delta_z = abs(self.positions['right_hand']['z']-self.positions['right_shoulder']['z'])
+        delta_shoulders = abs(self.positions['right_shoulder']['x']-self.positions['left_shoulder']['x'])
+        return (delta_x>delta_shoulders and delta_y<0.3 and delta_z<0.3)
+
+
+    def check_left_hand_side(self):
+        delta_x = abs(self.positions['left_hand']['x'] - self.positions['left_shoulder']['x'])
+        delta_y = abs(self.positions['left_hand']['y'] - self.positions['left_shoulder']['y'])
+        delta_z = abs(self.positions['left_hand']['z'] - self.positions['left_shoulder']['z'])
+        delta_shoulders = abs(self.positions['right_shoulder']['x'] - self.positions['left_shoulder']['x'])
+        return (delta_x > delta_shoulders and delta_y < 0.3 and delta_z < 0.3)
+
+    def check_both_hands_side(self):
+        return self.check_right_hand_side() and self.check_left_hand_side()
