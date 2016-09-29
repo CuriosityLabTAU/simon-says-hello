@@ -24,6 +24,6 @@ class KinectPose():
         print (self.positions['head']['x'])
 
     def parse_condition(self):
-
+        print("r")
 
    #def check_condition
