@@ -1,18 +1,18 @@
-from interaction_control.component import *
-
 import rospy
 from std_msgs.msg import String
 
-class ChildKinect(Component):
+class ChildKinect():
     kinect_listener = None
 
-    def start(self):
+    def __init__(self):
+        self.current_state = None
+        self.current_param = None
+
         print('Starting kinect')
         self.current_state = 'started'
 
         rospy.init_node('kinect_listener', anonymous=True)
         rospy.Subscriber("kinect_poses", String, self.got_pose)
-        # rospy.spin()
 
     def wait_for_start_pose(self):
         self.current_state = 'wait_for_start_pose'
@@ -34,7 +34,7 @@ class ChildKinect(Component):
                 return
 
         if self.current_state == 'wait_for_yes_pose':
-            if poses[0] == 1:
+            if poses[2] == 1:
                 self.current_state = 'yes_pose_detected'
                 return
 

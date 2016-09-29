@@ -1,3 +1,3 @@
 from child_kinect import *
-from game_manager import *
-from robot_nao import *
+from simon import *
+from nao_move import *

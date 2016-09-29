@@ -1,16 +1,12 @@
 # -*- encoding: UTF-8 -*-
 
-# nao = NaoNode
-# nao.pose_names
-# nao.move_to_pose('pose_name')
-
 import sys
 import almath
 from naoqi import ALProxy
 import rospy
 import time
 
-audio_file_path = '/home/gorengordon/projects/simon-says-hello/audio_files/'
+
 class NaoNode:
 
     def __init__(self):
@@ -28,6 +24,7 @@ class NaoNode:
         # Get the Robot Configuration
         self.robotConfig = self.motionProxy.getRobotConfig()
         self.init_poses()
+        self.init_utterances()
 
     def move_to_pose(self, pose):
 
@@ -124,11 +121,27 @@ class NaoNode:
         # fileId = self.audioProxy.post.playFile("../audio_files/bye.wav")
         self.audioProxy.playFile('/home/nao/naoqi/wav/' + filename,1.0,0.0)
 
-# try:
-#     nao = NaoNode()
-#     nao.move_to_pose(nao.poses['right_hand_up'])
-#     nao.play_file()
-# except rospy.ROSInterruptException:
-#     pass
-
-
+    def init_utterances(self):
+        self.utterances = {
+            'correct_pose': [
+                'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
+                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
+                'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved',
+                'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+            ],
+            'got you': [
+                'after NO Hertzel says+ child move.wav'
+            ],
+            'didnt get it': [
+                'after Hertzel says+ wrong child move.wav',
+                'after Hertzel says+ wrong child move 2.wav',
+                'after Hertzel says+ wrong child move 3.wav',
+                'after Hertzel says+ wrong child move 4.wav'
+            ],
+            'good job': [
+                'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
+                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
+                'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved',
+                'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+            ]
+        }

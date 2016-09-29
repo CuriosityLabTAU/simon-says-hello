@@ -6,5 +6,3 @@ A. Make the kienct sensor ready
 3. catkin_ws>>catkin_make
 4. Test:    >>roslaunch my_skeleton_markers markers.launch &
 5.          >>rostopic echo skeleton
-
-B. Make the node of readying the skeleton topic
