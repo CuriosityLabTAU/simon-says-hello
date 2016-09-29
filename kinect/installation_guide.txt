@@ -1,0 +1,10 @@
+Steps to make the kinect part work:
+
+A. Make the kienct sensor ready
+1. Have a catkin_ws folder ready (from ROS installation)
+2. In catkin_ws/src: git clone https://github.com/CuriosityLabTAU/my_skeleton_markers
+3. catkin_ws>>catkin_make
+4. Test:    >>roslaunch my_skeleton_markers markers.launch &
+5.          >>rostopic echo skeleton
+
+B. Make the node of readying the skeleton topic
