@@ -11,10 +11,6 @@ class GameManager(Component):
         print('Starting GameManager')
         self.current_state = 'started'
 
-        rospy.init_node('kinect_listener', anonymous=True)
-        rospy.Subscriber("skeleton", skeleton, self.got_pose)
-        rospy.spin()
-
     def start_game(self):
         print('starting game')
         self.current_param = "both_hands_up"

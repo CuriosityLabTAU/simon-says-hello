@@ -16,7 +16,7 @@ def callback(data):
 
 def kinect_listener():
     #init a listener to kinect and
-    rospy.init_node('kinect_listener', anonymous=True)
+    rospy.init_node('kinect_listener')
     rospy.Subscriber("skeleton", Skeleton, callback)
     rospy.spin()
 

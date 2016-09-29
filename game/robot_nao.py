@@ -1,6 +1,4 @@
-from interaction_control.robot import *
-from Nao.nao_move import *
-
+from interaction_control import *
 
 class RobotNao(Component):
     talk_node = None

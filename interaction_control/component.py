@@ -1,5 +1,6 @@
 import sys
 from functools import partial
+import schedule
 
 from kivy.clock import Clock
 is_logged = True
@@ -41,13 +42,15 @@ class Component:
 
     def run(self):
         print(self.name, 'running ...')
+        # schedule.every(1).seconds.do(self.resolve)
+        # self.resolve()
         self.event = Clock.schedule_interval(self.resolve, 0.5)
 
     def end_run(self):
         Clock.unschedule(self.event)
 
     def resolve(self, *args):
-        # print('resolve', self.name, self.current_state)
+        print('resolve', self.name, self.current_state)
         self.current_action = {}
         if self.current_state != 'idle':
             called = False
