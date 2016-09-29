@@ -1,11 +1,14 @@
 # -*- encoding: UTF-8 -*-
 
-''' PoseInit: Small example to make Nao go to an initial position. '''
+# nao = NaoNode
+# nao.pose_names
+# nao.move_to_pose('pose_name')
 
 import sys
 import almath
 from naoqi import ALProxy
 import rospy
+import time
 
 
 class NaoNode:
@@ -23,24 +26,26 @@ class NaoNode:
 
         # Get the Robot Configuration
         self.robotConfig = self.motionProxy.getRobotConfig()
+        self.init_poses()
 
     def move_to_pose(self, pose):
-        Head     = [pose['HeadYawAngle'], pose['HeadPitchAngle']]
 
-        LeftArm  = [pose['ShoulderPitchAngle'], +pose['ShoulderRollAngle'],
-                    +pose['ElbowYawAngle'], +pose['ElbowRollAngle'], pose['WristYawAngle'], pose['HandAngle']]
-        RightArm = [pose['ShoulderPitchAngle'], -pose['ShoulderRollAngle'], -pose['ElbowYawAngle'], -pose['ElbowRollAngle'], pose['WristYawAngle'], pose['HandAngle']]
+        # Head     = [HeadYawAngle, HeadPitchAngle]
+        #
+        # LeftArm  = [ShoulderPitchAngle, +ShoulderRollAngle, +ElbowYawAngle, +ElbowRollAngle, WristYawAngle, HandAngle]
+        # RightArm = [ShoulderPitchAngle, -ShoulderRollAngle, -ElbowYawAngle, -ElbowRollAngle, WristYawAngle, HandAngle]
+        #
+        # LeftLeg  = [0.0,                      #hipYawPitch
+        #             spreadAngle,              #hipRoll
+        #             -kneeAngle/2-torsoAngle,  #hipPitch
+        #             kneeAngle,                #kneePitch
+        #             -kneeAngle/2,             #anklePitch
+        #             -spreadAngle]             #ankleRoll
+        # RightLeg = [0.0, -spreadAngle, -kneeAngle/2-torsoAngle, kneeAngle, -kneeAngle/2,  spreadAngle]
 
-        LeftLeg  = [0.0,                      #hipYawPitch
-                    pose['spreadAngle'],              #hipRoll
-                    -pose['kneeAngle']/2-pose['torsoAngle'],  #hipPitch
-                    pose['kneeAngle'],                #kneePitch
-                    -pose['kneeAngle']/2,             #anklePitch
-                    -pose['spreadAngle']]             #ankleRoll
-        RightLeg = [0.0, -pose['spreadAngle'], -pose['kneeAngle']/2-pose['torsoAngle'], pose['kneeAngle'], -pose['kneeAngle']/2,  pose['spreadAngle']]
-
-        # Gather the joints together
-        pTargetAngles = Head + LeftArm + LeftLeg + RightLeg + RightArm
+        # # Gather the joints together
+        # pTargetAngles = Head + LeftArm + LeftLeg + RightLeg + RightArm
+        pTargetAngles = pose['head'] + pose['left_arm'] + pose['left_leg'] + pose['right_leg'] + pose['right_arm']
 
         # Convert to radians
         pTargetAngles = [ x * almath.TO_RAD for x in pTargetAngles]
@@ -56,27 +61,69 @@ class NaoNode:
         # Ask motion to do this with a blocking call
         self.motionProxy.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
 
+    def init_poses(self):
+        self.base_pose = {
+            'head': [0,0],
+            'left_arm': [+80,0,0,0,0,0],
+            'right_arm': [+80,0,0,0,0,0],
+            'left_leg': [0,0,0,0,0,0],
+            'right_leg': [0,0,0,0,0,0]
+        }
+        
+        self.pose_names = [
+            "right_hand_up",
+            "left_hand_up",
+            "both_hands_up",
+            "right_hand_forward",
+            "left_hand_forward",
+            "both_hands_forward",
+            "right_hand_side",
+            "left_hand_side",
+            "both_hand_side"
+          ]
+        
+        self.poses = {}
+        for n in self.pose_names:
+            self.poses[n] = {
+                'head': [0,0],
+                'left_arm': [+80,0,0,0,0,0],
+                'right_arm': [+80,0,0,0,0,0],
+                'left_leg': [0,0,0,0,0,0],
+                'right_leg': [0,0,0,0,0,0]
+            }
+        
+        self.poses['right_hand_up']['right_arm'][0] = -60
+        
+        self.poses['left_hand_up']['left_arm'][0] = -60
+        
+        self.poses['both_hands_up']['right_arm'][0] = -60
+        self.poses['both_hands_up']['left_arm'][0] = -60
+        #-----
+        self.poses['right_hand_forward']['right_arm'][0] = 0
+        self.poses['left_hand_forward']['left_arm'][0] = 0
+        self.poses['both_hands_forward']['right_arm'][0] = 0
+        self.poses['both_hands_forward']['left_arm'][0] = 0
+        #----
+        self.poses['right_hand_side']['right_arm'][0] = 0
+        self.poses['right_hand_side']['right_arm'][1] = -60
+        
+        self.poses['left_hand_side']['left_arm'][0] = 0
+        self.poses['left_hand_side']['left_arm'][1] = +60
+        
+        self.poses['both_hand_side']['right_arm'][0] = 0
+        self.poses['both_hand_side']['right_arm'][1] = -60
+        self.poses['both_hand_side']['left_arm'][0] = 0
+        self.poses['both_hand_side']['left_arm'][1] = +60
 
-pose = {
-    'HeadYawAngle'       : - 20.0,
-    'HeadPitchAngle'     : + 0.0,
-
-    'ShoulderPitchAngle' : +50.0,
-    'ShoulderRollAngle'  : +50.0,
-    'ElbowYawAngle'      : -50.0,
-    'ElbowRollAngle'     : -50.0,
-    'WristYawAngle'      : + 0.0,
-    'HandAngle'          : + 0.0,
-
-    # Define legs position
-    'kneeAngle'    : +40.0,
-    'torsoAngle'   : + 0.0, # bend the torso
-    'spreadAngle'  : + 0.0 # spread the legs
-}
 
 try:
     nao = NaoNode()
-    nao.move_to_pose(pose)
+    for k, p in poses.items():
+        print(k)
+        nao.move_to_pose(p)
+        time.sleep(1)
+        nao.move_to_pose(base_pose)
+        time.sleep(1)
 except rospy.ROSInterruptException:
     pass
 
