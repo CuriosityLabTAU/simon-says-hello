@@ -10,7 +10,7 @@ from naoqi import ALProxy
 import rospy
 import time
 
-
+audio_file_path = '/home/gorengordon/projects/simon-says-hello/audio_files/'
 class NaoNode:
 
     def __init__(self):
@@ -19,6 +19,7 @@ class NaoNode:
 
         try:
             self.motionProxy = ALProxy("ALMotion", robotIP, port)
+            self.audioProxy = ALProxy("ALAudioPlayer", robotIP, port)
         except Exception,e:
             print "Could not create proxy to ALMotion"
             print "Error was: ",e
@@ -115,15 +116,15 @@ class NaoNode:
         self.poses['both_hand_side']['left_arm'][0] = 0
         self.poses['both_hand_side']['left_arm'][1] = +60
 
+    def play_file(self, filename=None):
+        #plays a file and get the current position 5 seconds later
+        # fileId = self.audioProxy.post.playFile("../audio_files/bye.wav")
+        self.audioProxy.playFile('/home/nao/naoqi/wav/' + 'bye.wav',1.0,0.0)
 
 try:
     nao = NaoNode()
-    for k, p in poses.items():
-        print(k)
-        nao.move_to_pose(p)
-        time.sleep(1)
-        nao.move_to_pose(base_pose)
-        time.sleep(1)
+    nao.move_to_pose(nao.poses['right_hand_up'])
+    nao.play_file()
 except rospy.ROSInterruptException:
     pass
 
