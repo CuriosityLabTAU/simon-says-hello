@@ -9,7 +9,8 @@ class RobotNao(Component):
         self.current_state = 'introduction'
         self.robot.play_file('intro.wav')
 
-    def act(self):
+    def act(self, action):
+        self.current_param = action
         self.current_state = "act"
         # say saimon says
         print "Simon says", self.current_param
