@@ -13,6 +13,7 @@ def callback(data):
     #rospy.init_node('kinect_poses_publisher')
     rospy.loginfo (message)
     pub.publish (message)
+    print(message)
 
 def kinect_listener():
     #init a listener to kinect and
@@ -20,5 +21,5 @@ def kinect_listener():
     rospy.Subscriber("skeleton", Skeleton, callback)
     rospy.spin()
 
-
+print("rinat")
 l = kinect_listener()
