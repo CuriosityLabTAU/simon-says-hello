@@ -138,10 +138,16 @@ class NaoNode:
                 'after Hertzel says+ wrong child move 3.wav',
                 'after Hertzel says+ wrong child move 4.wav'
             ],
+            #'good job': [
+            #    'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
+            #    'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
+            #    'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved',
+            #    'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+            #]
             'good job': [
-                'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
-                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
-                'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved',
-                'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+                'after NO Hertzel says+ child move.wav',
+                'after NO Hertzel says+ child move.wav',
+                'after NO Hertzel says+ child move.wav',
+                'after NO Hertzel says+ child move.wav'
             ]
         }
