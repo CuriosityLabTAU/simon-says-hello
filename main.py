@@ -9,7 +9,7 @@ print('python skeleton_markers_reader.py')
 print('-------')
 
 #l = kinect.skeleton_markers_reader.kinect_listener()
-os.system('kinect/skeleton_markers_reader.py')
+# os.system('kinect/skeleton_markers_reader.py')
 # basic system parameters
 sleep_time = 0.25
 round_duration = 5
@@ -20,7 +20,7 @@ simon = Simon()
 simon.howie.move_to_pose(simon.howie.base_pose)
 
 # introduction
-# simon.howie.play_file('detection instruction.wav')
+simon.howie.play_file('detection instruction.wav')
 simon.howie.move_to_pose(simon.howie.poses['both_hands_up'])
 simon.child.current_state = 'wait_for_start_pose'
 while simon.child.current_state != 'start_pose_detected':
@@ -42,6 +42,7 @@ for a in range(number_of_rounds):
     simon.child.current_state = 'wait_for_current_pose'
 
     # how long to wait until next round
+    already_responded = False
     for t in range(time_steps):
         time.sleep(sleep_time)
 
@@ -57,10 +58,12 @@ for a in range(number_of_rounds):
                 else:
                     simon.howie.play_file(random.choice(simon.howie.utterances['got you']))
                     print('Got you!')
+                already_responded = True
                 break
             else:
                 print('wrong pose')
                 simon.child.current_state = 'wait_for_current_pose'
+    if not already_responded:
         # time passed, did the child respond correctly?
         if simon.hertzel_says:
             simon.howie.play_file(random.choice(simon.howie.utterances['didnt get it']))

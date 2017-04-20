@@ -19,7 +19,7 @@ open PyCharm from the terminal with the command:
 
 1. in terminal run:
     >>roscore
-    >>roslaunch my_skeleton_markers markers.launch
+    >>roslaunch skeleton_markers markers.launch
     >>rostopic echo skeleton
 1. run python skeleton_markers_reader.py
 2. run main.py

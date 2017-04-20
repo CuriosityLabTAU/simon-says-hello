@@ -10,7 +10,7 @@ import time
 class NaoNode:
 
     def __init__(self):
-        robotIP = '192.168.0.100'
+        robotIP = '192.168.0.101'
         port = 9559
 
         try:
@@ -125,9 +125,11 @@ class NaoNode:
         self.utterances = {
             'correct_pose': [
                 'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
-                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
-                'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved',
-                'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav'
+                # ,
+                # 'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved'
+                # ,
+                # 'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
             ],
             'got you': [
                 'after NO Hertzel says+ child move.wav'
