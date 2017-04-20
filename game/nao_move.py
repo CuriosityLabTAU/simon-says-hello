@@ -125,11 +125,9 @@ class NaoNode:
         self.utterances = {
             'correct_pose': [
                 'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
-                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav'
-                # ,
-                # 'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved'
-                # ,
-                # 'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+                'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
+                'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved.wav',
+                'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved.wav'
             ],
             'got you': [
                 'after NO Hertzel says+ child move.wav'
@@ -143,8 +141,8 @@ class NaoNode:
             #'good job': [
             #    'after Hertzel says+ currect child move OR after NO Hertzel says+ child not moved.wav',
             #    'after Hertzel says+ currect child move 2  OR after NO Hertzel says+ child not moved.wav',
-            #    'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved',
-            #    'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved'
+            #    'after Hertzel says+ currect child move 3 OR after NO Hertzel says+ child not moved.wav',
+            #    'after Hertzel says+ currect child move 4 OR after NO Hertzel says+ child not moved.wav'
             #]
             'good job': [
                 'after NO Hertzel says+ child move.wav',
